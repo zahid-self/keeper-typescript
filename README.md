@@ -2,7 +2,7 @@
 
 A simple and efficient to-do list application built with Next.js, Tailwind CSS, and TypeScript.
 
-![keeper](./public/images/keeper_wireframe.png)
+![keeper](./public/keeper_wireframe.png)
 
 ## Features
 
@@ -28,3 +28,4 @@ A simple and efficient to-do list application built with Next.js, Tailwind CSS, 
 
    ```bash
    git clone https://github.com/your-username/your-to-do-list-app.git
+   ```
