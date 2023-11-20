@@ -6,9 +6,11 @@ import SingleTodo from "./SingleTodo"
 interface Props {
   todos: Todo[]
   setTodos: React.Dispatch<React.SetStateAction<Todo[]>>
+  setTodoInput: React.Dispatch<React.SetStateAction<string>>
+  todoInput: string
 }
 
-const TodoList: React.FC<Props> = ({ todos, setTodos }: Props) => {
+const TodoList: React.FC<Props> = ({ todos, setTodos, setTodoInput, todoInput }: Props) => {
   return (
     <section className="w-full flex text-left">
       <table className="table-fixed w-full">
@@ -31,7 +33,14 @@ const TodoList: React.FC<Props> = ({ todos, setTodos }: Props) => {
         <tbody>
           {todos.length > 0 ? (
             todos.map((todo: Todo) => (
-              <SingleTodo key={todo.id} todos={todos} todo={todo} setTodos={setTodos} />
+              <SingleTodo
+                key={todo.id}
+                todos={todos}
+                todo={todo}
+                setTodos={setTodos}
+                setTodoInput={setTodoInput}
+                todoInput={todoInput}
+              />
             ))
           ) : (
             <tr>

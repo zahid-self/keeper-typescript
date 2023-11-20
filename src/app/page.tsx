@@ -19,7 +19,12 @@ const Home: React.FC = () => {
     <main className="w-8/12 mx-auto flex justify-center items-center h-screen text-white">
       <div className="bg-[#618264] p-4 rounded-md	">
         <InputUI todoInput={todoInput} setTodoInput={setTodoInput} handleAddTodo={handleAddTodo} />
-        <TodoList todos={todos} setTodos={setTodos} />
+        <TodoList
+          todos={todos}
+          setTodos={setTodos}
+          setTodoInput={setTodoInput}
+          todoInput={todoInput}
+        />
       </div>
     </main>
   )
