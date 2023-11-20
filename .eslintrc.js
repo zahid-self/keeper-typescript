@@ -4,15 +4,6 @@ module.exports = {
   rules: {
     quotes: "off",
     semi: ["error", "always"],
-    "no-unused-vars": [
-      "error",
-      {
-        args: "after-used",
-        caughtErrors: "none",
-        ignoreRestSiblings: true,
-        vars: "all"
-      }
-    ],
     "prefer-const": "error",
     "react-hooks/exhaustive-deps": "error"
   }
