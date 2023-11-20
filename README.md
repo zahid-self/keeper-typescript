@@ -27,5 +27,6 @@ A simple and efficient to-do list application built with Next.js, Tailwind CSS, 
 1. Clone the repository:
 
    ```bash
-   git clone https://github.com/your-username/your-to-do-list-app.git
+   git clone https://github.com/zahid-self/keeper-typescript.git
+   
    ```
