@@ -18,10 +18,8 @@ const SingleTodo: React.FC<Props> = ({ todos, todo, setTodos, setTodoInput, todo
   const [editTodo, setEditTodo] = useState<string>(todo.title)
 
   useEffect(() => {
-    if (intpurRef.current) {
-      intpurRef.current.style.outline = "none"
-    }
-  }, [])
+    intpurRef.current?.focus()
+  }, [isEdit])
 
   const handeCompleted = (e: React.MouseEvent, id: number) => {
     setTodos(todos.map((todo) => (todo.id === id ? { ...todo, isDone: !todo.isDone } : todo)))
