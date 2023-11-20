@@ -22,7 +22,7 @@ const SingleTodo: React.FC<Props> = ({ todos, todo, setTodos }: Props) => {
     <tr className="rounded-lg mb-4">
       <td className="px-6 py-4">{todo.title}</td>
       <td className="px-6 py-4">{todo.isDone ? "Completed" : "Pending"}</td>
-      <td className="px-6 py-4">{todo.createdAt}</td>
+      <td className="px-6 py-4">{todo.createdAt.toLocaleString()}</td>
       <td className="px-6 py-4">
         <div className="flex gap-[5px]">
           <span onClick={(e) => handeCompleted(e, todo.id)}>
