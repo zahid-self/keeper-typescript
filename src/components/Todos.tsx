@@ -1,54 +1,72 @@
 import React from "react"
-
 import { Todo } from "@/app/model"
 import SingleTodo from "./SingleTodo"
+import { Droppable } from "@hello-pangea/dnd"
 
 interface Props {
   todos: Todo[]
   setTodos: React.Dispatch<React.SetStateAction<Todo[]>>
-  setTodoInput: React.Dispatch<React.SetStateAction<string>>
-  todoInput: string
+  completedTodos: Todo[]
+  setCompletedTodos: React.Dispatch<React.SetStateAction<Todo[]>>
 }
 
-const TodoList: React.FC<Props> = ({ todos, setTodos, setTodoInput, todoInput }: Props) => {
+const TodoList: React.FC<Props> = ({
+  todos,
+  setTodos,
+  completedTodos,
+  setCompletedTodos
+}: Props) => {
   return (
-    <section className="w-full flex text-left">
-      <table className="table-fixed w-full">
-        <thead>
-          <tr>
-            <th scope="col" className="px-6 py-4">
-              Title
-            </th>
-            <th scope="col" className="px-6 py-4">
-              Status
-            </th>
-            <th scope="col" className="px-6 py-4">
-              Created
-            </th>
-            <th scope="col" className="px-6 py-4">
-              Action
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          {todos.length > 0 ? (
-            todos.map((todo: Todo) => (
-              <SingleTodo
-                key={todo.id}
-                todos={todos}
-                todo={todo}
-                setTodos={setTodos}
-                setTodoInput={setTodoInput}
-                todoInput={todoInput}
-              />
-            ))
-          ) : (
-            <tr>
-              <td className="px-6 py-4">No todo added yet</td>
-            </tr>
-          )}
-        </tbody>
-      </table>
+    <section className="flex w-[1241px] p-[40px] items-start gap-[40px]">
+      <Droppable droppableId="todoList">
+        {(provided) => (
+          <div
+            className="flex p-[24px] flex-col justify-center items-start gap-[24px] flex-[1_0_0] rounded-[16px] bg-[#F29727]"
+            ref={provided.innerRef}
+            {...provided.droppableProps}
+          >
+            {todos.length > 0 ? (
+              todos.map((todo, index) => (
+                <SingleTodo
+                  key={todo.id}
+                  todos={todos}
+                  todo={todo}
+                  setTodos={setTodos}
+                  index={index}
+                />
+              ))
+            ) : (
+              <p>No todos available</p>
+            )}
+            {provided.placeholder}
+          </div>
+        )}
+      </Droppable>
+
+      <Droppable droppableId="completedTodoList">
+        {(provided) => (
+          <div
+            className="flex p-[24px] flex-col justify-center items-start gap-[24px] flex-[1_0_0] rounded-[16px] bg-[#22A699]"
+            ref={provided.innerRef}
+            {...provided.droppableProps}
+          >
+            {completedTodos.length > 0 ? (
+              completedTodos.map((todo, index) => (
+                <SingleTodo
+                  key={todo.id}
+                  todos={completedTodos}
+                  todo={todo}
+                  setTodos={setCompletedTodos}
+                  index={index}
+                />
+              ))
+            ) : (
+              <p>No completed todos</p>
+            )}
+            {provided.placeholder}
+          </div>
+        )}
+      </Droppable>
     </section>
   )
 }

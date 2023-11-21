@@ -3,7 +3,6 @@ module.exports = {
   plugins: ["react", "react-hooks", "prettier"],
   rules: {
     quotes: "off",
-    semi: ["error", "always"],
     "prefer-const": "error",
     "react-hooks/exhaustive-deps": "error"
   }

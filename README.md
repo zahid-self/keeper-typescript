@@ -1,14 +1,14 @@
 # Your To-Do List App
 
-A simple and efficient to-do list application built with Next.js, Tailwind CSS, and TypeScript.
-
-![keeper](./public/keeper_wireframe.png)
+This is todo list version 2 add drag and drop feature
+![keeper](./public/dnd_version.png)
 
 ## Features
 
 - Add, edit, and delete tasks
 - Mark tasks as completed
 - Responsive design for various devices
+- Drag and drop features 
 
 ## Technologies Used
 
