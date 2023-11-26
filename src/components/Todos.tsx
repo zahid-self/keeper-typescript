@@ -1,74 +1,31 @@
 import React from "react"
 import { Todo } from "@/app/model"
 import SingleTodo from "./SingleTodo"
-import { Droppable } from "@hello-pangea/dnd"
+import { SortableContext } from "@dnd-kit/sortable"
+import { useDroppable } from "@dnd-kit/core"
 
 interface Props {
-  todos: Todo[]
-  setTodos: React.Dispatch<React.SetStateAction<Todo[]>>
-  completedTodos: Todo[]
-  setCompletedTodos: React.Dispatch<React.SetStateAction<Todo[]>>
+  todos: string[]
+  title: string
 }
 
-const TodoList: React.FC<Props> = ({
-  todos,
-  setTodos,
-  completedTodos,
-  setCompletedTodos
-}: Props) => {
-  return (
-    <section className="flex w-[1241px] p-[40px] items-start gap-[40px]">
-      <Droppable droppableId="todoList">
-        {(provided) => (
-          <div
-            className="flex p-[24px] flex-col justify-center items-start gap-[24px] flex-[1_0_0] rounded-[16px] bg-[#F29727]"
-            ref={provided.innerRef}
-            {...provided.droppableProps}
-          >
-            {todos.length > 0 ? (
-              todos.map((todo, index) => (
-                <SingleTodo
-                  key={todo.id}
-                  todos={todos}
-                  todo={todo}
-                  setTodos={setTodos}
-                  index={index}
-                />
-              ))
-            ) : (
-              <p>No todos available</p>
-            )}
-            {provided.placeholder}
-          </div>
-        )}
-      </Droppable>
+const Todos: React.FC<Props> = ({ todos, title }: Props) => {
+  const { setNodeRef } = useDroppable({ id: title })
 
-      <Droppable droppableId="completedTodoList">
-        {(provided) => (
-          <div
-            className="flex p-[24px] flex-col justify-center items-start gap-[24px] flex-[1_0_0] rounded-[16px] bg-[#22A699]"
-            ref={provided.innerRef}
-            {...provided.droppableProps}
-          >
-            {completedTodos.length > 0 ? (
-              completedTodos.map((todo, index) => (
-                <SingleTodo
-                  key={todo.id}
-                  todos={completedTodos}
-                  todo={todo}
-                  setTodos={setCompletedTodos}
-                  index={index}
-                />
-              ))
-            ) : (
-              <p>No completed todos</p>
-            )}
-            {provided.placeholder}
+  return (
+    <section className="w-[600px] p-[40px] items-start gap-[40px]">
+      <div className="flex p-[24px] flex-col justify-center items-start gap-[24px] flex-[1_0_0] rounded-[16px] bg-[#F29727]">
+        <h2>{title}</h2>
+        <SortableContext id={title} items={todos}>
+          <div className="w-full flex flex-col gap-[10px] py-4" ref={setNodeRef}>
+            {todos.map((title, index) => (
+              <SingleTodo key={index} title={title} />
+            ))}
           </div>
-        )}
-      </Droppable>
+        </SortableContext>
+      </div>
     </section>
   )
 }
 
-export default TodoList
+export default Todos
