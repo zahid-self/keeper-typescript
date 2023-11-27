@@ -3,6 +3,13 @@ import React, { useState } from "react"
 import { DndContext, DragEndEvent, DragOverEvent } from "@dnd-kit/core"
 import Todos from "@/components/Todos"
 import { arrayMove } from "@dnd-kit/sortable"
+import Image from "next/image"
+import SingleNavItem from "@/components/SingleNavItem"
+import Sidebar from "@/components/Sidebar"
+import Link from "next/link"
+import SingleCard from "@/components/SingleCard"
+import ColumnHeader from "@/components/ColumnHeader"
+import { Todo } from "./model"
 
 interface ITodoList {
   [key: string]: string[]
@@ -93,17 +100,111 @@ const Home: React.FC = () => {
     }
   }
 
+  const Todo: Todo = {
+    id: 1,
+    title: "Landing Page and Dashboard",
+    description: "Nice and clean landing page, and also good for children.",
+    status: { isHigh: true, label: "High" },
+    role: "All",
+    isDone: false,
+    createdAt: "28 Jul",
+    time: "16:00"
+  }
+
   return (
-    <DndContext onDragEnd={dradEndHandler} onDragOver={dragOnverHanlder}>
-      <main className="w-11/12 mx-auto flex justify-center items-start h-auto text-white mt-20">
-        <h1 className="text-center">React DND Multiple Container example</h1>
-        <div className="flex p-4 rounded-md	">
-          {Object.keys(todoList).map((key, index) => (
-            <Todos key={index} todos={todoList[key]} title={key} />
-          ))}
+    <main className="flex gap-8">
+      <aside className="w-[320px] flex h-screen p-[32px] flex-col justify-between items-start flex-shrink-0 rounded-tl-[6px] rounded-br-none rounded-tr-none rounded-bl-[6px] border-[2px] border-solid border-[#F0F1F2] bg-[#FFF]">
+        <Sidebar />
+      </aside>
+      <section className="w-4/5 flex flex-col gap-8 h-screen">
+        <nav className="flex w-full p-[32px] justify-between items-center rounded-tl-none rounded-br-none rounded-tr-[6px] rounded-bl-none border-[2px] border-[#F0F1F2] bg-[#FFF]">
+          <h1 className="text-[28px] not-italic font-medium leading-[40px] tracking-[-0.28px]">
+            Team Astrology
+          </h1>
+          <div className="flex w-[347px] px-[16px] py-[10px] justify-center items-center gap-[16px] flex-shrink-0 rounded-[6px] border-[2px] border-[solid] border-[#F0F1F2] bg-[#F4F6F8]">
+            <Image src={"./search.svg"} width={24} height={24} alt="search" />
+            <p className="flex-[1_0_0] text-[#898E99] font-[Inter] text-[16px] not-italic font-normal leading-[26px]">
+              Search
+            </p>
+          </div>
+          <div className="flex items-center gap-[32px]">
+            <div className="flex items-center gap-[36px]">
+              <div className="flex items-end -space-x-12">
+                <div className="flex w-[32px] h-[32px] flex-col justify-center items-center gap-[10px] rounded-[6px] border-[2px] border-[solid] border-[#FFF] bg-[#73B06F]">
+                  <Image src={"./user.svg"} width={32} height={32} alt="User 1" />
+                </div>
+                <div className="flex w-[32px] h-[32px] flex-col justify-center items-center gap-[10px] rounded-[6px] border-[2px] border-[solid] border-[#FFF] bg-[#73B06F]">
+                  <Image src={"./user.svg"} width={32} height={32} alt="User 1" />
+                </div>
+                <div className="flex w-[32px] h-[32px] flex-col justify-center items-center gap-[10px] rounded-[6px] border-[2px] border-[solid] border-[#FFF] bg-[#73B06F]">
+                  <Image src={"./user.svg"} width={32} height={32} alt="User 1" />
+                </div>
+                <div className="flex w-[32px] h-[32px] flex-col justify-center items-center gap-[10px] rounded-[6px] border-[2px] border-[solid] border-[#FFF] bg-[#73B06F]">
+                  <Image src={"./user.svg"} width={32} height={32} alt="User 1" />
+                </div>
+                <div className="flex w-[32px] h-[32px] flex-col justify-center items-center gap-[10px] rounded-[6px] border-[2px] border-[solid] border-[#FFF] bg-[#73B06F]">
+                  <Image src={"./user.svg"} width={32} height={32} alt="User 1" />
+                </div>
+                <div className="flex w-[32px] h-[32px] flex-col justify-center items-center gap-[10px] rounded-[6px] border-[2px] border-[solid] border-[#FFF] bg-[#73B06F]">
+                  <Image src={"./user.svg"} width={32} height={32} alt="User 1" />
+                </div>
+              </div>
+              <p className="text-center font-[Inter] text-[16px] not-italic font-medium leading-[26px]">
+                14 Members
+              </p>
+            </div>
+            <button className="flex w-[98px] px-[16px] py-[10px] justify-center items-center gap-[10px] rounded-[6px] bg-[#157BFF] text-white">
+              Invite
+            </button>
+          </div>
+        </nav>
+        <div className="inline-flex items-center gap-[32px]">
+          <Link
+            href={"#"}
+            className="text-[#898E99] font-[Inter] text-[16px] not-italic font-medium leading-[26px]"
+          >
+            Overview
+          </Link>
+          <Link
+            href={"#"}
+            className="text-[#898E99] font-[Inter] text-[16px] not-italic font-medium leading-[26px]"
+          >
+            Board
+          </Link>
+          <Link
+            href={"#"}
+            className="text-[#898E99] font-[Inter] text-[16px] not-italic font-medium leading-[26px]"
+          >
+            Calender
+          </Link>
         </div>
-      </main>
-    </DndContext>
+        <DndContext onDragEnd={dradEndHandler} onDragOver={dragOnverHanlder}>
+          <section className="flex w-full items-start gap-[24px] justify-between overflow-x-scroll">
+            <div className="flex w-full flex-col items-start gap-[24px]">
+              <ColumnHeader columnName="To do" />
+              <SingleCard todo={Todo} hasThumb={false} />
+              <SingleCard todo={Todo} hasThumb={true} thumbLink="./Image.png" />
+            </div>
+            <div className="flex flex-col items-start gap-[24px]">
+              <ColumnHeader columnName="Doing" />
+              <SingleCard todo={Todo} hasThumb={false} />
+            </div>
+            <div className="flex flex-col items-start gap-[24px]">
+              <ColumnHeader columnName="In review" />
+              <SingleCard todo={Todo} hasThumb={false} />
+            </div>
+            <div className="flex flex-col items-start gap-[24px]">
+              <ColumnHeader columnName="Done" />
+              <SingleCard todo={Todo} hasThumb={false} />
+            </div>
+            <div className="flex flex-col items-start gap-[24px]">
+              <ColumnHeader columnName="Done" />
+              <SingleCard todo={Todo} hasThumb={false} />
+            </div>
+          </section>
+        </DndContext>
+      </section>
+    </main>
   )
 }
 
