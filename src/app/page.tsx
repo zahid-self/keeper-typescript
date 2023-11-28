@@ -1,24 +1,99 @@
 "use client"
 import React, { useState } from "react"
-import { DndContext, DragEndEvent, DragOverEvent } from "@dnd-kit/core"
+import {
+  DndContext,
+  DragEndEvent,
+  DragOverEvent,
+  closestCenter,
+  useSensors,
+  useSensor,
+  PointerSensor,
+  KeyboardSensor,
+  DragStartEvent,
+  DragOverlay
+} from "@dnd-kit/core"
 import Todos from "@/components/Todos"
-import { arrayMove } from "@dnd-kit/sortable"
-import Image from "next/image"
-import SingleNavItem from "@/components/SingleNavItem"
+import { arrayMove, sortableKeyboardCoordinates } from "@dnd-kit/sortable"
 import Sidebar from "@/components/Sidebar"
-import Link from "next/link"
-import SingleCard from "@/components/SingleCard"
-import ColumnHeader from "@/components/ColumnHeader"
 import { Todo } from "./model"
+import TopNavigation from "@/components/TopNavigation"
+import TaskBoardNav from "@/components/TaskBoardNav"
+import SingleCard from "@/components/SingleCard"
+import { createPortal } from "react-dom"
 
 interface ITodoList {
-  [key: string]: string[]
+  [key: string]: Todo[]
 }
-
 const Home: React.FC = () => {
+  const [activeCard, setActiveCard] = useState<Todo | null>(null)
+
   const [todoList, setTodoList] = useState<ITodoList>({
-    Process: ["Learn React", "Learn dnd-kit"],
-    Done: ["Learn Typescript", "Learn css"]
+    Todo: [
+      {
+        id: 1,
+        title: "Learn React",
+        description: "Nice and clean landing page, and also good for children.",
+        status: { isHigh: true, label: "High" },
+        role: "All",
+        isDone: false,
+        createdAt: "28 Jul",
+        time: "16:00"
+      },
+      {
+        id: 2,
+        title: "Learn Typescript",
+        description: "Nice and clean landing page, and also good for children.",
+        status: { isHigh: true, label: "High" },
+        role: "All",
+        isDone: false,
+        createdAt: "28 Jul",
+        time: "16:00"
+      }
+    ],
+    Inreview: [
+      {
+        id: 3,
+        title: "Make todo more smooth",
+        description: "Nice and clean landing page, and also good for children.",
+        status: { isHigh: true, label: "High" },
+        role: "DEV",
+        isDone: false,
+        createdAt: "28 Jul",
+        time: "16:00"
+      },
+      {
+        id: 4,
+        title: "Fix if any bug arise",
+        description: "Nice and clean landing page, and also good for children.",
+        status: { isHigh: true, label: "High" },
+        role: "DEV",
+        isDone: false,
+        createdAt: "28 Jul",
+        time: "16:00"
+      }
+    ],
+    Done: [
+      {
+        id: 5,
+        title: "Explore Web SQL",
+        description: "Nice and clean landing page, and also good for children.",
+        status: { isHigh: true, label: "High" },
+        role: "All",
+        isDone: false,
+        createdAt: "28 Jul",
+        time: "16:00"
+      },
+      {
+        id: 6,
+        title: "Apply Testing",
+        description: "Nice and clean landing page, and also good for children.",
+        status: { isHigh: true, label: "High" },
+        role: "All",
+        isDone: false,
+        createdAt: "28 Jul",
+        time: "16:00"
+      }
+    ]
   })
 
   //drag end event handler function
@@ -31,7 +106,7 @@ const Home: React.FC = () => {
 
     //check if it's not in the same column (moved to different column)
     if (
-      e.active.data.current?.sortable.containerId !== e.over?.data.current?.sortable.containerId
+      e.active.data.current?.sortable?.containerId !== e.over?.data.current?.sortable?.containerId
     ) {
       return
     }
@@ -41,8 +116,14 @@ const Home: React.FC = () => {
     setTodoList((todoList) => {
       const temp = { ...todoList }
       if (!e.over) return temp
-      const oldIdx = temp[containerName].indexOf(e.active.id.toString())
-      const newIdx = temp[containerName].indexOf(e.over.id.toString())
+      const oldIdx = temp[containerName].findIndex(
+        (currentValue) => currentValue.id === e.active.id,
+        {}
+      )
+      const newIdx = temp[containerName].findIndex(
+        (currentValue) => currentValue.id === e.over.id,
+        {}
+      )
       temp[containerName] = arrayMove(temp[containerName], oldIdx, newIdx)
       return temp
     })
@@ -65,50 +146,57 @@ const Home: React.FC = () => {
     //if there are no target container then item is moved into a droppable zone
     //droppable = whole area of the sortable list (works when the sortable list is empty)
     if (!targetContainer) {
+      const existingItem = todoList[initialContainer].find(
+        (currentValue) => currentValue.id === e.active.id
+      )
+      console.log(existingItem)
       //if item already there then don't re-add it
-      if (todoList[e.over!.id].includes(e.active.id.toString())) return temp
+      if (existingItem) return temp
 
       //remove item it's initial container
-      temp[initialContainer] = temp[initialContainer].filter(
-        (todo) => todo !== e.active.id.toString()
-      )
+      temp[initialContainer] = temp[initialContainer].filter((todo) => todo.id !== e.active.id)
 
       //add item into it's target container which the droppable zone belogs to
-      temp[e.over!.id].push(e.active.id.toString())
+      todoList[initialContainer].push(existingItem)
 
       setTodoList(temp)
     }
 
     //if the item is drag around in the same container then just reorder the list
     if (initialContainer === targetContainer) {
-      const oldIdx = temp[initialContainer].indexOf(e.active.id.toString())
-      const newIdx = temp[initialContainer].indexOf(e.over!.id.toString())
+      const oldIdx = temp[initialContainer].findIndex(
+        (currentValue) => currentValue.id === e.active.id,
+        {}
+      )
+      const newIdx = temp[initialContainer].findIndex(
+        (currentValue) => currentValue.id === e.over.id,
+        {}
+      )
       temp[initialContainer] = arrayMove(temp[initialContainer], oldIdx, newIdx)
       setTodoList(temp)
     } else {
       //if the item is drag into another different container
 
       //remove item from it's initial container
-      temp[initialContainer] = temp[initialContainer].filter(
-        (todo) => todo !== e.active.id.toString()
-      )
+      temp[initialContainer] = temp[initialContainer].filter((todo) => todo.id !== e.active.id)
 
       //add item to it's target container
-      const newIdx = temp[targetContainer]?.indexOf(e.over!.id.toString())
-      temp[targetContainer]?.splice(newIdx, 0, e.active.id.toString())
+      const newIdx = temp[targetContainer]?.findIndex(
+        (currentValue) => currentValue.id === e.over!.id
+      )
+      const existingItem = todoList[initialContainer].find(
+        (currentValue) => currentValue.id === e.active.id
+      )
+      temp[targetContainer]?.splice(newIdx, 0, existingItem)
       setTodoList(temp)
     }
   }
 
-  const Todo: Todo = {
-    id: 1,
-    title: "Landing Page and Dashboard",
-    description: "Nice and clean landing page, and also good for children.",
-    status: { isHigh: true, label: "High" },
-    role: "All",
-    isDone: false,
-    createdAt: "28 Jul",
-    time: "16:00"
+  const dragStartHandler = (e: DragStartEvent) => {
+    if (e.active.data.current?.type === "Card") {
+      setActiveCard(e.active.data.current.todo)
+      return
+    }
   }
 
   return (
@@ -117,91 +205,25 @@ const Home: React.FC = () => {
         <Sidebar />
       </aside>
       <section className="w-4/5 flex flex-col gap-8 h-screen">
-        <nav className="flex w-full p-[32px] justify-between items-center rounded-tl-none rounded-br-none rounded-tr-[6px] rounded-bl-none border-[2px] border-[#F0F1F2] bg-[#FFF]">
-          <h1 className="text-[28px] not-italic font-medium leading-[40px] tracking-[-0.28px]">
-            Team Astrology
-          </h1>
-          <div className="flex w-[347px] px-[16px] py-[10px] justify-center items-center gap-[16px] flex-shrink-0 rounded-[6px] border-[2px] border-[solid] border-[#F0F1F2] bg-[#F4F6F8]">
-            <Image src={"./search.svg"} width={24} height={24} alt="search" />
-            <p className="flex-[1_0_0] text-[#898E99] font-[Inter] text-[16px] not-italic font-normal leading-[26px]">
-              Search
-            </p>
-          </div>
-          <div className="flex items-center gap-[32px]">
-            <div className="flex items-center gap-[36px]">
-              <div className="flex items-end -space-x-12">
-                <div className="flex w-[32px] h-[32px] flex-col justify-center items-center gap-[10px] rounded-[6px] border-[2px] border-[solid] border-[#FFF] bg-[#73B06F]">
-                  <Image src={"./user.svg"} width={32} height={32} alt="User 1" />
-                </div>
-                <div className="flex w-[32px] h-[32px] flex-col justify-center items-center gap-[10px] rounded-[6px] border-[2px] border-[solid] border-[#FFF] bg-[#73B06F]">
-                  <Image src={"./user.svg"} width={32} height={32} alt="User 1" />
-                </div>
-                <div className="flex w-[32px] h-[32px] flex-col justify-center items-center gap-[10px] rounded-[6px] border-[2px] border-[solid] border-[#FFF] bg-[#73B06F]">
-                  <Image src={"./user.svg"} width={32} height={32} alt="User 1" />
-                </div>
-                <div className="flex w-[32px] h-[32px] flex-col justify-center items-center gap-[10px] rounded-[6px] border-[2px] border-[solid] border-[#FFF] bg-[#73B06F]">
-                  <Image src={"./user.svg"} width={32} height={32} alt="User 1" />
-                </div>
-                <div className="flex w-[32px] h-[32px] flex-col justify-center items-center gap-[10px] rounded-[6px] border-[2px] border-[solid] border-[#FFF] bg-[#73B06F]">
-                  <Image src={"./user.svg"} width={32} height={32} alt="User 1" />
-                </div>
-                <div className="flex w-[32px] h-[32px] flex-col justify-center items-center gap-[10px] rounded-[6px] border-[2px] border-[solid] border-[#FFF] bg-[#73B06F]">
-                  <Image src={"./user.svg"} width={32} height={32} alt="User 1" />
-                </div>
-              </div>
-              <p className="text-center font-[Inter] text-[16px] not-italic font-medium leading-[26px]">
-                14 Members
-              </p>
-            </div>
-            <button className="flex w-[98px] px-[16px] py-[10px] justify-center items-center gap-[10px] rounded-[6px] bg-[#157BFF] text-white">
-              Invite
-            </button>
-          </div>
-        </nav>
-        <div className="inline-flex items-center gap-[32px]">
-          <Link
-            href={"#"}
-            className="text-[#898E99] font-[Inter] text-[16px] not-italic font-medium leading-[26px]"
-          >
-            Overview
-          </Link>
-          <Link
-            href={"#"}
-            className="text-[#898E99] font-[Inter] text-[16px] not-italic font-medium leading-[26px]"
-          >
-            Board
-          </Link>
-          <Link
-            href={"#"}
-            className="text-[#898E99] font-[Inter] text-[16px] not-italic font-medium leading-[26px]"
-          >
-            Calender
-          </Link>
-        </div>
-        <DndContext onDragEnd={dradEndHandler} onDragOver={dragOnverHanlder}>
+        <TopNavigation />
+        <TaskBoardNav />
+        <DndContext
+          onDragStart={dragStartHandler}
+          onDragEnd={dradEndHandler}
+          onDragOver={dragOnverHanlder}
+        >
           <section className="flex w-full items-start gap-[24px] justify-between overflow-x-scroll">
-            <div className="flex w-full flex-col items-start gap-[24px]">
-              <ColumnHeader columnName="To do" />
-              <SingleCard todo={Todo} hasThumb={false} />
-              <SingleCard todo={Todo} hasThumb={true} thumbLink="./Image.png" />
-            </div>
-            <div className="flex flex-col items-start gap-[24px]">
-              <ColumnHeader columnName="Doing" />
-              <SingleCard todo={Todo} hasThumb={false} />
-            </div>
-            <div className="flex flex-col items-start gap-[24px]">
-              <ColumnHeader columnName="In review" />
-              <SingleCard todo={Todo} hasThumb={false} />
-            </div>
-            <div className="flex flex-col items-start gap-[24px]">
-              <ColumnHeader columnName="Done" />
-              <SingleCard todo={Todo} hasThumb={false} />
-            </div>
-            <div className="flex flex-col items-start gap-[24px]">
-              <ColumnHeader columnName="Done" />
-              <SingleCard todo={Todo} hasThumb={false} />
-            </div>
+            {Object.keys(todoList).map((column, index) => (
+              <Todos todos={todoList[column]} title={column} key={index} />
+            ))}
           </section>
+          {typeof window === "object" &&
+            createPortal(
+              <DragOverlay>
+                {activeCard && <SingleCard todo={activeCard} hasThumb={false} thumbLink="" />}
+              </DragOverlay>,
+              document.body
+            )}
         </DndContext>
       </section>
     </main>

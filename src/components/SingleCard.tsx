@@ -1,7 +1,9 @@
 import { Todo } from "@/app/model"
+import { useSortable } from "@dnd-kit/sortable"
 import Image from "next/image"
-import React from "react"
-
+import React, { CSSProperties } from "react"
+import { CSS } from "@dnd-kit/utilities"
+import SingleCardOverlay from "./SingleCardOverlay"
 interface Props {
   todo: Todo
   hasThumb: boolean
@@ -9,8 +11,38 @@ interface Props {
 }
 
 const SingleCard: React.FC<Props> = ({ todo, hasThumb, thumbLink }) => {
+  const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({
+    id: todo?.id,
+    data: {
+      type: "Card",
+      todo
+    }
+  })
+
+  const style: CSSProperties = {
+    transition,
+    transform: CSS.Transform.toString(transform)
+  }
+
+  if (isDragging) {
+    return (
+      <SingleCardOverlay
+        setNodeRef={setNodeRef}
+        listeners={listeners}
+        attributes={attributes}
+        style={style}
+      />
+    )
+  }
+
   return (
-    <div className="flex w-[356px] flex-col items-start">
+    <div
+      className="flex w-[356px] flex-col items-start"
+      ref={setNodeRef}
+      {...listeners}
+      {...attributes}
+      style={style}
+    >
       <div className="flex p-[16px] flex-col items-start gap-[16px] self-stretch rounded-tl-[6px] rounded-br-none rounded-tr-[6px] rounded-bl-none border-[2px] border-[solid] border-[#F0F1F2] bg-[#FFF]">
         <div className="flex flex-col items-start gap-[16px] self-strech">
           <div className="flex flex-col items-start gap-[24px] self-stretch">
@@ -18,15 +50,15 @@ const SingleCard: React.FC<Props> = ({ todo, hasThumb, thumbLink }) => {
               <div className="flex items-center gap-[12px]">
                 <span
                   className={`flex px-[14px] py-[6px] flex-col justify-center items-center gap-[10px] rounded-[6px] ${
-                    todo.status.isHigh
+                    todo?.status.isHigh
                       ? "text-[#832525] bg-[#FDECEC]"
                       : "bg-[#FDF7E6] text-[#816204]"
                   } font-[Inter] text-[14px] not-italic font-medium leading-[24px]`}
                 >
-                  {todo.status.label}
+                  {todo?.status.label}
                 </span>
                 <span className="flex px-[14px] py-[6px] flex-col justify-center items-center gap-[10px] rounded-[6px] bg-[#E8F2FF] text-[#0C448C] font-[Inter] text-[14px] not-italic font-medium leading-[24px] uppercase">
-                  ui/ux
+                  {todo.role}
                 </span>
               </div>
               <div className="w-[24px] h-[24px] flex-shrink-0">
@@ -35,10 +67,10 @@ const SingleCard: React.FC<Props> = ({ todo, hasThumb, thumbLink }) => {
             </div>
             <div className="flex flex-col items-start gap-[8px] self-stretch">
               <h2 className="self-stretch text-[20px] not-italic font-semibold leading-[30px] tracking-[-0.2px]">
-                {todo.title}
+                {todo?.title}
               </h2>
               <p className="self-stretch text-[16px] not-italic font-normal leading-[26px]">
-                {todo.description}
+                {todo?.description}
               </p>
             </div>
           </div>
