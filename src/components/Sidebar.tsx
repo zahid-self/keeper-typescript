@@ -8,15 +8,9 @@ const Sidebar: React.FC = () => {
       <div className="flex flex-col items-start gap-[48px] self-stretch">
         <h1 className="text-[28px] font-normal leading-[40px] tracking-[-0.28px]">Keeper</h1>
         <div className="flex flex-col items-start gap-[4px] self-strech">
-          <SingleNavItem title="Home" imagePath="./home.svg" link="/home" />
-          <SingleNavItem title="Teams" imagePath="./teams.svg" link="/teams" />
+          <SingleNavItem title="Home" imagePath="./home.svg" link="/" />
+          <SingleNavItem title="Projects" imagePath="./teams.svg" link="/projects" />
           <SingleNavItem title="Tasks" imagePath="./tasks.svg" link="/tasks" />
-          <SingleNavItem title="Messages" imagePath="./messages.svg" link="/messages" />
-          <SingleNavItem
-            title="Notifications"
-            imagePath="./notifications.svg"
-            link="/notifications"
-          />
         </div>
       </div>
       <div className="flex px-[12px] py-[16px] items-center gap-[10px] self-strech">

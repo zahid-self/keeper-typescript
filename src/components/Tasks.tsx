@@ -10,7 +10,7 @@ interface Props {
   title: string
 }
 
-const Todos: React.FC<Props> = ({ todos, title }: Props) => {
+const Tasks: React.FC<Props> = ({ todos, title }: Props) => {
   const { setNodeRef } = useDroppable({ id: title })
   const todoIds = useMemo(() => {
     return todos.map((todo) => todo.id)
@@ -32,4 +32,4 @@ const Todos: React.FC<Props> = ({ todos, title }: Props) => {
   )
 }
 
-export default Todos
+export default Tasks
