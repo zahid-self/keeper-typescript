@@ -1,4 +1,4 @@
-# Your To-Do List App
+#To-Do List App
 
 This is todo list version 2 add drag and drop feature
 ![keeper](./public/dnd_version.png)
@@ -27,5 +27,6 @@ This is todo list version 2 add drag and drop feature
 1. Clone the repository:
 
    ```bash
-   git clone https://github.com/your-username/your-to-do-list-app.git
+   git clone https://github.com/zahid-self/keeper-typescript.git
+   
    ```
