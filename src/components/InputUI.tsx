@@ -17,16 +17,16 @@ const InputUI: React.FC<Props> = ({ todoInput, setTodoInput, handleAddTodo }) =>
 
   return (
     <div className="w-full">
-      <form className="flex justify-between px-4 py-2" onSubmit={handleAddTodo}>
+      <form className="flex justify-center px-4 py-2" onSubmit={handleAddTodo}>
         <input
           ref={intpurRef}
           type="text"
           value={todoInput}
           onChange={(e) => setTodoInput(e.target.value)}
-          className="text-[#618264] w-10/12 px-4 py-2 border-2 border-[#B0D9B1] rounded-md"
+          className="text-[#22A699] w-6/12 px-4 py-2 border-2 border-[#B0D9B1] rounded-md"
           placeholder="Enter your job here"
         />
-        <button type="submit" className="bg-[#B0D9B1] px-9 rounded-lg font-bold">
+        <button type="submit" className="bg-[#22A699] px-9 rounded-lg font-bold">
           Add Task
         </button>
       </form>

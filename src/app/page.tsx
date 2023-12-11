@@ -1,33 +1,28 @@
-"use client"
-import React, { useState } from "react"
+import Sidebar from "@/components/Sidebar"
+import Image from "next/image"
+import React from "react"
 
-import InputUI from "@/components/InputUI"
-import { Todo } from "./model"
-import TodoList from "@/components/Todos"
-
-const Home: React.FC = () => {
-  const [todoInput, setTodoInput] = useState<string>("")
-  const [todos, setTodos] = useState<Todo[]>([])
-
-  const handleAddTodo = (e: React.FormEvent) => {
-    e.preventDefault()
-    setTodos([...todos, { id: Date.now(), title: todoInput, isDone: false, createdAt: new Date() }])
-    setTodoInput("")
-  }
-
+const page = () => {
   return (
-    <main className="w-8/12 mx-auto flex justify-center items-center h-screen text-white">
-      <div className="bg-[#618264] p-4 rounded-md	">
-        <InputUI todoInput={todoInput} setTodoInput={setTodoInput} handleAddTodo={handleAddTodo} />
-        <TodoList
-          todos={todos}
-          setTodos={setTodos}
-          setTodoInput={setTodoInput}
-          todoInput={todoInput}
-        />
-      </div>
+    <main className="flex gap-8">
+      <aside className="w-[320px] flex h-screen p-[32px] flex-col justify-between items-start flex-shrink-0 rounded-tl-[6px] rounded-br-none rounded-tr-none rounded-bl-[6px] border-[2px] border-solid border-[#F0F1F2] bg-[#FFF]">
+        <Sidebar />
+      </aside>
+      <section className="w-4/5 flex flex-col gap-8 h-screen">
+        <div className="flex p-[24px] h-[250px] flex-col justify-between items-start self-stretch rounded-[6px] border-[2px] border-[solid] border-[#F0F1F2] bg-[#FFF]">
+          <div className="flex flex-col gap-4 items-start self-stretch w-[600px]">
+            <h5 className="text-[24px] font-semibold">Welcome to the all-new project</h5>
+            <p>
+              Built like a spreadsheet, project tables give you a live canvas to filter, sort, and
+              group issues and pull requests. Tailor them to your needs with custom fields and saved
+              views.
+            </p>
+          </div>
+        </div>
+        <div></div>
+      </section>
     </main>
   )
 }
 
-export default Home
+export default page
