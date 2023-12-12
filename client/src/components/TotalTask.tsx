@@ -25,10 +25,10 @@ const TotalTask: React.FC = () => {
         <div className="flex px-[24px] py-[32px] flex-col justify-center items-start gap-[32px] flex-[1_0_0] self-stretch rounded-[6px] bg-[#F18E19] relative">
           {/* <div className="w-[107px] h-[150px] absolute -left-[70px] -top-[127px] rounded-[6px] bg-[#F48282]"></div> */}
           <p className="text-white self-stretch text-[48px] not-italic font-normal leading-[54px] tracking-[-0.48px]">
-            3
+            2
           </p>
           <p className="text-white self-stretch text-[16px] not-italic font-normal leading-[26px]">
-            To do
+            In Review
           </p>
           {/* <div className="w-[107px] h-[150px] absolute -right-[63.5px] -bottom-[109px] rounded-[6px] bg-[#F48282]"></div> */}
         </div>
@@ -38,17 +38,17 @@ const TotalTask: React.FC = () => {
             3
           </p>
           <p className="text-white self-stretch text-[16px] not-italic font-normal leading-[26px]">
-            To do
+            Backlog
           </p>
           {/* <div className="w-[107px] h-[150px] absolute -right-[63.5px] -bottom-[109px] rounded-[6px] bg-[#F48282]"></div> */}
         </div>
         <div className="flex px-[24px] py-[32px] flex-col justify-center items-start gap-[32px] flex-[1_0_0] self-stretch rounded-[6px] bg-[#59C3C8] relative">
           {/* <div className="w-[107px] h-[150px] absolute -left-[70px] -top-[127px] rounded-[6px] bg-[#F48282]"></div> */}
           <p className="text-white self-stretch text-[48px] not-italic font-normal leading-[54px] tracking-[-0.48px]">
-            3
+            2
           </p>
           <p className="text-white self-stretch text-[16px] not-italic font-normal leading-[26px]">
-            To do
+            Done
           </p>
           {/* <div className="w-[107px] h-[150px] absolute -right-[63.5px] -bottom-[109px] rounded-[6px] bg-[#F48282]"></div> */}
         </div>
