@@ -1,7 +1,7 @@
 #To-Do List App
 
 This is todo list version 2 add drag and drop feature
-![keeper](./public/dnd_version.png)
+![keeper](./client/public/demo.gif)
 
 ## Features
 
