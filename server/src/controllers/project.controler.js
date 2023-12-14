@@ -55,7 +55,48 @@ const createProject = async (req, res) => {
     })
 }
 
+const updateProject = async (req, res) => {
+  const { title, description, startDate, endDate } = req.body;
+  const { userId, projectId } = req.params;
+  try {
+    const updatedData = await Projects.update({
+      title: title,
+      description: description,
+      startDate: startDate,
+      endDate: endDate
+    }, {
+      where: {
+        [Op.and]: [
+          {
+            userId: {
+              [Op.eq]: userId
+            },
+            id: {
+              [Op.eq]: projectId
+            }
+          }
+        ]
+      }
+    })
+    return res.status(200).json({
+      success: true,
+      message: 'Project Data Updated',
+      error: {},
+      data: updatedData
+    });
+  } catch (error) {
+    return res.status(500).json({
+      success: false,
+      message: error.message,
+      error: true,
+      data: {}
+    });
+  }
+
+}
+
 module.exports = {
   getProject,
-  createProject
+  createProject,
+  updateProject
 }
