@@ -95,8 +95,32 @@ const updateProject = async (req, res) => {
 
 }
 
+const deleteProject = async (req, res) => {
+  const { userId, id } = req.params;
+
+  try {
+    const project = await Projects.findOne({
+      where: { userId, id }
+    });
+
+    //check if project exists
+    if (!project) {
+      return res.status(404).json({ error: 'Record not found' });
+    }
+
+    //delete the project
+    await project.destroy();
+    return res.status(200).json({ message: 'Project deleted successfully' });
+  } catch (error) {
+    console.log('Error deleting project', error)
+    return res.status(500).json({ message: 'Internal server error' })
+  }
+
+};
+
 module.exports = {
   getProject,
   createProject,
-  updateProject
+  updateProject,
+  deleteProject
 }
