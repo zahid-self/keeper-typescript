@@ -4,10 +4,9 @@ import Navigation from "@/components/landing/Navigation"
 import Pricing from "@/components/landing/Pricing"
 import Features from "@/components/landing/Features"
 import WorkManagement from "@/components/landing/WorkManagement"
-import Image from "next/image"
 import React from "react"
 
-const page = () => {
+const page = (): JSX.Element => {
   return (
     <>
       <Navigation />

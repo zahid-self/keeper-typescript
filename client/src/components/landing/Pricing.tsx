@@ -1,5 +1,6 @@
 import Image from "next/image"
 import React from "react"
+import { createCheckoutSession } from "@/app/actions/strpie"
 
 const Pricing: React.FC = () => {
   return (
@@ -23,7 +24,7 @@ const Pricing: React.FC = () => {
           <div className="flex flex-col items-start gap-[25px] self-stretch">
             <p className="text-[#212529] text-[24px] font-semibold leading-[36px]">Free</p>
             <p className="text-[#212529] text-[36px] font-bold leading-normal -tracking-[0.72px]">
-              $0
+              $50
             </p>
             <p className="self-stretch text-[18px] font-medium leading-[23px] tracking-[-0.36px]">
               Capture ideas and find them quickly
@@ -61,9 +62,16 @@ const Pricing: React.FC = () => {
               </p>
             </div>
           </div>
-          <button className="flex px-[40px] py-[16px] justify-center items-center rounded-[8px] border-[1px] border-solid border-[#FFE492] bg-[#FFF]">
-            Get Started
-          </button>
+          <form action={createCheckoutSession}>
+            <input type="hidden" name="price" value={50} />
+            <input type="hidden" name="packName" value="Free" />
+            <button
+              type="submit"
+              className="flex px-[40px] py-[16px] justify-center items-center rounded-[8px] border-[1px] border-solid border-[#FFE492] bg-[#FFF]"
+            >
+              Get Started
+            </button>
+          </form>
         </div>
         <div className="flex px-[44px] py-[80px] flex-col justify-center items-start gap-[25px] flex-[1_0_0] rounded-[10px] border-[1px] border-[solid] border-[#FFE492] bg-[#FFF]">
           <div className="flex flex-col items-start gap-[25px] self-stretch">
