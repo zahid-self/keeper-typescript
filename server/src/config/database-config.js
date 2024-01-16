@@ -16,6 +16,7 @@ try {
 let db = {}
 
 db.Projects = require('../model/project.model')(sequelize, Sequelize)
+db.Tasks = require('../model/task.model')(sequelize, Sequelize)
 
 db.Sequelize = Sequelize;
 db.sequelize = sequelize;
