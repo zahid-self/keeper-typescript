@@ -62,7 +62,7 @@ const SingleCard: React.FC<Props> = ({ todo, hasThumb, thumbLink }) => {
                 </span>
               </div>
               <div className="w-[24px] h-[24px] flex-shrink-0">
-                <Image src={"./dotted.svg"} width={24} height={24} alt="" />
+                <Image src={"/dotted.svg"} width={24} height={24} alt="" />
               </div>
             </div>
             <div className="flex flex-col items-start gap-[8px] self-stretch">
@@ -93,16 +93,16 @@ const SingleCard: React.FC<Props> = ({ todo, hasThumb, thumbLink }) => {
           </h5>
           <div className="flex items-start self-stretch -space-x-2">
             <div className="flex w-[32px] h-[32px] flex-col justify-center items-center gap-[10px] rounded-[6px] border-[2px] border-solid border-[#FFF] bg-[#73B06F]">
-              <Image src={"./user.svg"} width={32} height={32} alt="User 1" />
+              <Image src={"/user.svg"} width={32} height={32} alt="User 1" />
             </div>
             <div className="flex w-[32px] h-[32px] flex-col justify-center items-center gap-[10px] rounded-[6px] border-[2px] border-solid border-[#FFF] bg-[#73B06F]">
-              <Image src={"./user.svg"} width={32} height={32} alt="User 1" />
+              <Image src={"/user.svg"} width={32} height={32} alt="User 1" />
             </div>
             <div className="flex w-[32px] h-[32px] flex-col justify-center items-center gap-[10px] rounded-[6px] border-[2px] border-solid border-[#FFF] bg-[#73B06F]">
-              <Image src={"./user.svg"} width={32} height={32} alt="User 1" />
+              <Image src={"/user.svg"} width={32} height={32} alt="User 1" />
             </div>
             <div className="flex w-[32px] h-[32px] flex-col justify-center items-center gap-[10px] rounded-[6px] border-[2px] border-solid border-[#FFF] bg-[#73B06F]">
-              <Image src={"./user.svg"} width={32} height={32} alt="User 1" />
+              <Image src={"/user.svg"} width={32} height={32} alt="User 1" />
             </div>
           </div>
         </div>
@@ -112,7 +112,7 @@ const SingleCard: React.FC<Props> = ({ todo, hasThumb, thumbLink }) => {
           </h5>
           <div className="flex justify-end items-center gap-[6px] self-stretch">
             <p className="font-[16px] not-italic leading-[26px]">26 Nov</p>
-            <Image src={"./single_dot.svg"} width={4} height={4} alt="" />
+            <Image src={"/single_dot.svg"} width={4} height={4} alt="" />
             <p className="font-[16px] not-italic leading-[26px]">7.00 PM</p>
           </div>
         </div>

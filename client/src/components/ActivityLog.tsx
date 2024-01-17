@@ -38,7 +38,7 @@ const ActivityLog = () => {
         <tbody>
           <tr>
             <th className="border-t-0 px-6 align-middle text-xs whitespace-nowrap p-4 text-left text-blueGray-700 ">
-              <Image src={"./user.svg"} width={28} height={28} alt="User name" />
+              <Image src={"/user.svg"} width={28} height={28} alt="User name" />
             </th>
             <td className="border-t-0 px-6 text-[16px] not-italic font-medium leading-[26px] align-middle border-l-0 border-r-0 whitespace-nowrap p-4">
               Zahid Hasan
@@ -58,7 +58,7 @@ const ActivityLog = () => {
           </tr>
           <tr>
             <th className="border-t-0 px-6 align-middle text-xs whitespace-nowrap p-4 text-left text-blueGray-700 ">
-              <Image src={"./user.svg"} width={28} height={28} alt="User name" />
+              <Image src={"/user.svg"} width={28} height={28} alt="User name" />
             </th>
             <td className="border-t-0 px-6 text-[16px] not-italic font-medium leading-[26px] align-middle border-l-0 border-r-0 whitespace-nowrap p-4">
               Zahid Hasan

@@ -15,7 +15,7 @@ const ColumnHeader: React.FC<Props> = ({ columnName }) => {
         </div>
       </div>
       <div className="w-[24px] h-[24px] flex-shrink-0">
-        <Image src={"./dotted.svg"} width={24} height={24} alt="" />
+        <Image src={"/dotted.svg"} width={24} height={24} alt="" />
       </div>
     </div>
   )

@@ -4,18 +4,38 @@ import SingleNavItem from "./SingleNavItem"
 import Image from "next/image"
 import Link from "next/link"
 import AddProject from "./AddProject"
+import TaskSvg from "./svgs/TaskSvg"
+import HomeSvg from "./svgs/HomeSvg"
+import ProjectsSvg from "./svgs/Projects"
+import { usePathname } from "next/navigation"
 
 const Sidebar: React.FC = () => {
   const [isShowModal, setIsShowModal] = useState(false)
+  const pathname = usePathname()
 
   return (
     <>
       <div className="flex flex-col items-start gap-[48px] self-stretch">
         <h1 className="text-[28px] font-normal leading-[40px] tracking-[-0.28px]">Keeper</h1>
         <div className="flex flex-col items-start gap-[4px] self-strech">
-          <SingleNavItem title="Home" imagePath="./home.svg" link="/" />
-          <SingleNavItem title="Projects" imagePath="./teams.svg" link="/projects" />
-          <SingleNavItem title="Tasks" imagePath="./tasks.svg" link="/tasks" />
+          <SingleNavItem
+            title="Home"
+            strokeColor={pathname === "/dashboard" ? "#157BFF" : "#898E99"}
+            link="/dashboard"
+            SvgComponent={HomeSvg}
+          />
+          <SingleNavItem
+            title="Projects"
+            SvgComponent={ProjectsSvg}
+            link="/dashboard/projects"
+            strokeColor={pathname.includes("projects") ? "#157BFF" : "#898E99"}
+          />
+          <SingleNavItem
+            title="Tasks"
+            SvgComponent={TaskSvg}
+            link="/dashboard/tasks"
+            strokeColor={pathname.includes("tasks") ? "#157BFF" : "#898E99"}
+          />
         </div>
       </div>
       <div className="w-full flex flex-col gap-4">
@@ -28,7 +48,7 @@ const Sidebar: React.FC = () => {
             <Image
               onClick={() => setIsShowModal(true)}
               className="cursor-pointer"
-              src={"./plus.svg"}
+              src={"/plus.svg"}
               width={25}
               height={25}
               alt="Add Projects"

@@ -4,7 +4,7 @@ import { DndContext, DragEndEvent, DragOverEvent, DragStartEvent, DragOverlay } 
 import Todos from "@/components/Tasks"
 import { arrayMove } from "@dnd-kit/sortable"
 import Sidebar from "@/components/Sidebar"
-import { Todo } from "../model"
+import { Todo } from "../../model"
 import TopNavigation from "@/components/TopNavigation"
 import SingleCard from "@/components/SingleCard"
 import { createPortal } from "react-dom"
@@ -244,11 +244,11 @@ const Home: React.FC = () => {
             <div className="flex flex-col items-start gap-[16px] self-stretch">
               <div className="flex items-start gap-[16px] self-stretch">
                 <div className="flex p-[16px] items-center gap-[20px] rounded-[6px] border-solid border-[2px] border[#F0F1F2] bg-[#fff]">
-                  <Image src={"./calendar_left.svg"} width={24} height={24} alt="left" />
+                  <Image src={"/calendar_left.svg"} width={24} height={24} alt="left" />
                   <p className="text-[24px] not-italic font-semibold leading-[30px] tracking-[-0.2px]">
                     2023
                   </p>
-                  <Image src={"./calendar_right.svg"} width={24} height={24} alt="left" />
+                  <Image src={"/calendar_right.svg"} width={24} height={24} alt="left" />
                 </div>
                 <div className="flex px-[32px] py-[18px] justify-between items-start flex-[1_0_0] rounded-[6px] border-[2px] border-solid border-[#F0F1F2] bg-[#FFF]">
                   <p className="text-[#898E99] text-[16px] not-italic font-medium leading-[26px]">
@@ -381,7 +381,7 @@ const Home: React.FC = () => {
                 <p className="text-[20px] font-semibold leading-[30px] tracking-[-0.2px]">
                   Thursday, 7th September 2023
                 </p>
-                <Image src={"./calendar_date_time_separator.svg"} width={2} height={25} alt="" />
+                <Image src={"/calendar_date_time_separator.svg"} width={2} height={25} alt="" />
                 <p className="text-[20px] font-semibold leading-[30px] tracking-[-0.2px]">
                   16:00 PM
                 </p>
